@@ -124,8 +124,9 @@ export function VideoInputForm(props: VideoInputFormProps) {
   return (
     <form onSubmit={handleUploadVideo} className="space-y-6">
       <label
+        data-disabled={status !== "waiting" && status != "success"}
         htmlFor="video"
-        className="relative border flex rounded-md aspect-video cursor-pointer border-dashed text-sm flex-col gap-2 items-center justify-center text-muted-foreground hover:bg-primary/5"
+        className="data-[disabled=true]:cursor-not-allowed relative border flex rounded-md aspect-video cursor-pointer border-dashed text-sm flex-col gap-2 items-center justify-center text-muted-foreground hover:bg-primary/5"
       >
         {previewURL ? (
           <video src={previewURL} controls={false} className="pointer-events-none absolute inset-0" />
@@ -137,7 +138,7 @@ export function VideoInputForm(props: VideoInputFormProps) {
         )}
       </label>
 
-      <input type="file" id="video" accept="video/mp4" className="sr-only" onChange={handleFileSelected} />
+      <input type="file" id="video" accept="video/mp4" disabled={status !== "waiting" && status != "success"} className="sr-only" onChange={handleFileSelected} />
 
       <Separator />
 
@@ -145,7 +146,7 @@ export function VideoInputForm(props: VideoInputFormProps) {
         <Label htmlFor="transcription_prompt">Prompt de transcrição</Label>
         <Textarea
           ref={promptInputRef}
-          disabled={status !== 'waiting'}
+          disabled={status !== "waiting" && status != "success"}
           id="transcription_prompt"
           className="h-20 leading-relaxed resize-none"
           placeholder="Inclua palavras-chave mencionadas no vídeo separadas por vírgula (,)"
@@ -154,7 +155,7 @@ export function VideoInputForm(props: VideoInputFormProps) {
 
       <Button
         data-success={status === 'success'}
-        disabled={status !== 'waiting'}
+        disabled={status !== "waiting" && status != "success"}
         type="submit"
         className="w-full data-[success=true]:bg-emerald-400"
       >
